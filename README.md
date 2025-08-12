@@ -64,7 +64,7 @@ Then run the import against the sample Git server URL created in the UI.
 flowchart LR
   A[SVN Working Copy] -->|Extract| B[Snapshot]
   B -->|Transform| C[Ephemeral Git Repo]
-  C -->|Load (HTTPS Push)| D[(Git Server)]
+  C -->|Load via HTTPS| D[Git Server]
   C --> M[Manifest\nSVN_IMPORT_MANIFEST.txt]
 ```
 
