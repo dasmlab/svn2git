@@ -52,13 +52,23 @@ docker run --rm -it \
 
 ## Test infrastructure
 
-Spin up sample servers:
+Fast path: run the full end-to-end example orchestrator. It will start SVN and Git containers, export the SVN working copy to the host, build the importer image, and execute the ETL.
+```bash
+./test/run_etl_example.sh
+```
+
+Manual steps if preferred:
 ```bash
 ./test/run-svn-sample.sh
 ./test/run-git-sample.sh
+# export working copy from svn container to /tmp/svn-wc
+mkdir -p /tmp/svn-wc
+docker exec svn-sample bash -lc 'tar -C /tmp/wc -cf - .' | tar -C /tmp/svn-wc -xf -
+docker build -t local/svn2git:dev .
+docker run --rm --network scm-playground -v /tmp/svn-wc:/src:ro local/svn2git:dev \
+  --source /src --target http://git-sample:3000/<user>/<repo>.git \
+  --user <user> --password <pass>
 ```
-
-Then run the import against the sample Git server URL created in the UI.
 
 ```mermaid
 flowchart LR
