@@ -1,0 +1,11 @@
+# ignore build artifacts
+bin/
+dist/
+**/*.swp
+**/*.log
+**/.DS_Store
+**/.git
+**/.idea
+**/.vscode
+**/node_modules
+
